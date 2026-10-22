@@ -42,7 +42,7 @@ rendiTabellone();
 //creo la funzione estrai 
 const estrai = () => {
   if (usciti.length === 90) { //se sono usciti tutti e 90 i numeri, interrompo la funzione  
-    return;
+    return alert('Hai estratto tutti i numeri!');
   }
   let casuale = Math.floor(Math.random() * 90) + 1; // numero casuale da 1 a 90
   while (usciti.includes(casuale)) {// finchè il numero è già uscito ne genero un altro 
@@ -67,6 +67,7 @@ const reset = () => {
   usciti = []; //array vuoto
   rendiTabellone(); //richiami la funzione rendiTabellone che inizialmete è vuoto
   cronologia.textContent ='Nessun numero estratto'; //all'interno dell'id della cronologia scrivi 'Nessun numero estratto'
-  spanUltimoNumero.textContent ='-'; //all'interno dello span ultimo numero scrivi -
+  spanUltimoNumero.textContent = '—'; //all'interno dello span ultimo numero scrivi —
 }
 resetBtn.addEventListener('click', reset); // al click del bottone ricomincia esegui la funzione reset
+

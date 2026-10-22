@@ -20,6 +20,8 @@ const tab = document.querySelector('#tabellone');
 const tabl = document.querySelector('.tabellone');
 const comandi = document.querySelector('.comandi')
 const estraiBtn = document.querySelector('#estrai');
+const spanUltimoNumero = document.querySelector('#ultimo-numero');
+const cronologia = document.querySelector('#cronologia');
 
 //crea i numeri da 1 a 90
 const rendiTabellone = () => {
@@ -47,6 +49,13 @@ const estrai = () => {
   }
   usciti.push(casuale); //aggiungi il numero all'aray
   rendiTabellone();
+  rendiCronologia();
 }
+estraiBtn.addEventListener('click', estrai);// al click del bottone esegui la funzione estrai
 
-estraiBtn.addEventListener('click', estrai);
+//creo la funzione cronologia
+const rendiCronologia = () => {
+const ultimiDieci= usciti.slice(-10); //estraggo dall'array gli ultimi 10 numeri
+cronologia.textContent = ultimiDieci.join(', '); // li inserisco come testo
+}
+rendiCronologia();

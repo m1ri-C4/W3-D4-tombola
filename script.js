@@ -23,20 +23,30 @@ const estraiBtn = document.querySelector('#estrai');
 
 //crea i numeri da 1 a 90
 const rendiTabellone = () => {
+  tab.innerHTML = '';
   for (let i = 1; i <= 90; i++) {
     const createDiv = document.createElement('div'); //creo l'elemento div
     createDiv.classList.add('tabellone', 'numero');
+    if (usciti.includes(i)){
+      createDiv.classList.add('uscito');
+    }
     createDiv.textContent = i; //inserisce il valore di i come testo nel div
     tab.appendChild(createDiv);
   }
 };
-rendiTabellone();
+  rendiTabellone();
 
 //creo la funzione estrai 
 const estrai = () => {
-  const casuale = usciti [Math.floor(Math.random() * 90) + 1]; // numero casuale da 1 a 90
- if (!usciti.includes(casuale)){ //se il numero NON è presente
+  if (usciti.length === 90) { //se sono usciti tutti e 90 i numeri, interrompo la funzione  
+   return;
+  }
+  let casuale = Math.floor(Math.random() * 90) + 1; // numero casuale da 1 a 90
+  while (usciti.includes(casuale)) {// finchè il numero è già uscito ne genero un altro 
+    casuale = Math.floor(Math.random() * 90) + 1;
+  }
   usciti.push(casuale); //aggiungi il numero all'aray
- } 
+  rendiTabellone();
 }
-estrai();
+
+estraiBtn.addEventListener('click', estrai);

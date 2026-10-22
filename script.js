@@ -19,9 +19,10 @@ let usciti = []; // array dei numeri già estratti
 const tab = document.querySelector('#tabellone');
 const tabl = document.querySelector('.tabellone');
 const comandi = document.querySelector('.comandi')
+const resetBtn = document.querySelector('#reset');
 const estraiBtn = document.querySelector('#estrai');
-const spanUltimoNumero = document.querySelector('#ultimo-numero');
 const cronologia = document.querySelector('#cronologia');
+const spanUltimoNumero = document.querySelector('#ultimo-numero');
 
 //crea i numeri da 1 a 90
 const rendiTabellone = () => {
@@ -29,33 +30,43 @@ const rendiTabellone = () => {
   for (let i = 1; i <= 90; i++) {
     const createDiv = document.createElement('div'); //creo l'elemento div
     createDiv.classList.add('tabellone', 'numero');
-    if (usciti.includes(i)){
+    if (usciti.includes(i)) {
       createDiv.classList.add('uscito');
     }
     createDiv.textContent = i; //inserisce il valore di i come testo nel div
     tab.appendChild(createDiv);
   }
 };
-  rendiTabellone();
+rendiTabellone();
 
 //creo la funzione estrai 
 const estrai = () => {
   if (usciti.length === 90) { //se sono usciti tutti e 90 i numeri, interrompo la funzione  
-   return;
+    return;
   }
   let casuale = Math.floor(Math.random() * 90) + 1; // numero casuale da 1 a 90
   while (usciti.includes(casuale)) {// finchè il numero è già uscito ne genero un altro 
     casuale = Math.floor(Math.random() * 90) + 1;
   }
   usciti.push(casuale); //aggiungi il numero all'aray
-  rendiTabellone();
+  rendiTabellone(); 
   rendiCronologia();
+  spanUltimoNumero.textContent = casuale; //scrivi all'interno dello span il numero casuale
 }
 estraiBtn.addEventListener('click', estrai);// al click del bottone esegui la funzione estrai
 
 //creo la funzione cronologia
 const rendiCronologia = () => {
-const ultimiDieci= usciti.slice(-10); //estraggo dall'array gli ultimi 10 numeri
-cronologia.textContent = ultimiDieci.join(', '); // li inserisco come testo
+  const ultimiDieci = usciti.slice(-10); //estraggo dall'array gli ultimi 10 numeri
+  cronologia.textContent = ultimiDieci.join(', '); // li inserisco come testo
 }
 rendiCronologia();
+
+//funzione di reset 
+const reset = () => {
+  usciti = []; //array vuoto
+  rendiTabellone(); //richiami la funzione rendiTabellone che inizialmete è vuoto
+  cronologia.textContent ='Nessun numero estratto'; //all'interno dell'id della cronologia scrivi 'Nessun numero estratto'
+  spanUltimoNumero.textContent ='-'; //all'interno dello span ultimo numero scrivi -
+}
+resetBtn.addEventListener('click', reset); // al click del bottone ricomincia esegui la funzione reset
